@@ -1,0 +1,37 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
+
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+}
+
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation rootProject.ext.support["kotlin-stdlib"]
+    implementation rootProject.ext.support["lifecycle-extensions"]
+    implementation rootProject.ext.support["lifecycle-viewmodel"]
+    implementation rootProject.ext.support["androidx-core"]
+    api rootProject.ext.deps["retrofit"]
+    api rootProject.ext.deps["retrofit-converter-gson"]
+
+    implementation rootProject.ext.deps["room"]
+    kapt rootProject.ext.deps["roomProcessor"]
+
+    testImplementation rootProject.ext.deps["junit"]
+    androidTestImplementation rootProject.ext.deps["androidJunit"]
+    androidTestImplementation rootProject.ext.deps["espresso"]
+
+
+
+
+}

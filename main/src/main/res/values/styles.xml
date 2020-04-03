@@ -1,0 +1,106 @@
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorBackgroundFloating">@android:color/white</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowAnimationStyle">@style/WindowAnimator</item>
+    </style>
+
+    <style name="WindowAnimator" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:activityOpenEnterAnimation">@anim/layout_right_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/layout_left_out</item>
+        <item name="android:activityCloseEnterAnimation">@anim/layout_left_in</item>
+        <item name="android:activityCloseExitAnimation">@anim/layout_right_out</item>
+    </style>
+
+
+    <style name="NavBar">
+        <item name="android:background">@color/nav_bar</item>
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:paddingRight">15dp</item>
+        <item name="android:height">44dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">44dp</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="TextNoticeGreen">
+        <item name="android:drawableStart">@drawable/icon_notice</item>
+        <item name="android:drawablePadding">7dp</item>
+        <item name="android:textSize">10sp</item>
+
+    </style>
+
+    <style name="Text11Complete">
+        <item name="android:drawableStart">@drawable/icon_complete</item>
+        <item name="android:drawablePadding">7dp</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#000</item>
+    </style>
+
+
+    <style name="Text11Black">
+        <item name="android:textSize">11sp</item>
+        <item name="android:textColor">#000</item>
+    </style>
+
+    <style name="Text12Black">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#000</item>
+    </style>
+
+    <style name="Text13Black">
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">#000</item>
+    </style>
+
+    <style name="Text14Black">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#000</item>
+    </style>
+
+    <style name="Text14BoldBlack">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#000</item>
+    </style>
+
+    <style name="Text16Black">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#000</item>
+    </style>
+
+
+    <style name="SmallExplainText">
+        <item name="android:textSize">12sp</item>
+        <item name="android:lineSpacingExtra">0dp</item>
+        <item name="android:letterSpacing">0.05</item>
+    </style>
+
+    <style name="NavButton">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/nav_button_text</item>
+    </style>
+
+    <style name="SpinnerDefault">
+        <item name="android:background">@drawable/spinner_drop_down_shape</item>
+        <item name="android:layout_height">@dimen/spinner_height</item>
+    </style>
+
+    <style name="RadioDefault">
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:button">@null</item>
+        <item name="android:padding">0dp</item>
+        <item name="android:background">@null</item>
+        <item name="android:drawableLeft">@drawable/radio_default_selector</item>
+        <item name="android:drawablePadding">10dp</item>
+    </style>
+
+</resources>

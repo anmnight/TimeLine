@@ -1,0 +1,95 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'com.jakewharton.butterknife'
+
+task printInfo() {
+    println("----------- Project info -------------")
+    println("versionCode : " + rootProject.ext.android["versionCode"])
+    println("applicationId : " + rootProject.ext.android["applicationId"])
+    println("--------------------------------------")
+}
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
+    defaultConfig {
+        applicationId rootProject.ext.android["applicationId"]
+        minSdkVersion rootProject.ext.android["minSdkVersion"]
+        targetSdkVersion rootProject.ext.android["targetSdkVersion"]
+        versionCode rootProject.ext.android["versionCode"]
+        versionName rootProject.ext.android["versionName"]
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.debug
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    flavorDimensions "default"
+
+    // If you need to add more flavors, consider using flavor dimensions.
+    productFlavors {
+        mock {
+            dimension "default"
+            applicationIdSuffix = ".mock"
+        }
+        prod {
+            dimension "default"
+        }
+    }
+
+    // Remove mockRelease as it's not needed.
+    android.variantFilter { variant ->
+        if (variant.buildType.name == 'release'
+                && variant.getFlavors().get(0).name == 'mock') {
+            variant.setIgnore(true)
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation rootProject.ext.support["kotlin-stdlib"]
+    implementation rootProject.ext.support["androidx-core"]
+    implementation rootProject.ext.support["appcompat"]
+    implementation rootProject.ext.support["legacy"]
+    implementation rootProject.ext.support["lifecycle-extensions"]
+    implementation rootProject.ext.support["lifecycle-viewmodel"]
+    implementation rootProject.ext.support["constraintlayout"]
+    implementation rootProject.ext.support["cardview"]
+
+
+    testImplementation rootProject.ext.deps["junit"]
+    androidTestImplementation rootProject.ext.deps["androidJunit"]
+    androidTestImplementation rootProject.ext.deps["espresso"]
+
+    testImplementation rootProject.ext.deps["mockio"]
+    androidTestImplementation rootProject.ext.deps["android-mock"]
+    
+    implementation rootProject.ext.deps["butterknife"]
+    kapt rootProject.ext.deps["butterknifeProcessor"]
+
+    implementation project(path: ':data')
+
+    implementation 'com.facebook.stetho:stetho:1.5.1'
+
+}
