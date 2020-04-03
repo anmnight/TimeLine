@@ -11,6 +11,7 @@ android {
         sourceCompatibility = 1.8
         targetCompatibility = 1.8
     }
+
 }
 
 
@@ -21,15 +22,18 @@ dependencies {
     implementation rootProject.ext.support["lifecycle-extensions"]
     implementation rootProject.ext.support["lifecycle-viewmodel"]
     implementation rootProject.ext.support["androidx-core"]
-    api rootProject.ext.deps["retrofit"]
-    api rootProject.ext.deps["retrofit-converter-gson"]
-
-    implementation rootProject.ext.deps["room"]
-    kapt rootProject.ext.deps["roomProcessor"]
 
     testImplementation rootProject.ext.deps["junit"]
     androidTestImplementation rootProject.ext.deps["androidJunit"]
     androidTestImplementation rootProject.ext.deps["espresso"]
+
+    implementation 'com.squareup.retrofit2:retrofit:2.8.1'
+    implementation 'com.squareup.retrofit2:converter-gson:2.8.1'
+    testImplementation 'com.squareup.okhttp3:mockwebserver:4.4.0'
+
+    implementation 'androidx.room:room-runtime:2.2.5'
+    kapt 'androidx.room:room-compiler:2.2.5'
+
 
 
 
