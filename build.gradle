@@ -21,6 +21,9 @@ allprojects {
         maven {
             url 'https://jitpack.io'
         }
+        repositories {
+            maven { url "https://oss.jfrog.org/libs-snapshot" }
+        }
     }
 }
 

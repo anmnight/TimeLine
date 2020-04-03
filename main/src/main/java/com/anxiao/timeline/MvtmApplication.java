@@ -2,7 +2,6 @@ package com.anxiao.timeline;
 
 import android.app.Application;
 import com.anxiao.timeline.data.database.DBRegister;
-import com.facebook.stetho.Stetho;
 
 /**
  * @author: anxiao
@@ -22,8 +21,8 @@ public class MvtmApplication extends Application {
 
         DBRegister.init(this);
 
-        //init stetho
-        Stetho.initializeWithDefaults(this);
+//        //init stetho
+//        Stetho.initializeWithDefaults(this);
 
     }
 }

@@ -23,11 +23,6 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.debug
 
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments = [AROUTER_MODULE_NAME: project.getName()]
-            }
-        }
     }
     buildTypes {
         release {
@@ -90,6 +85,6 @@ dependencies {
 
     implementation project(path: ':data')
 
-    implementation 'com.facebook.stetho:stetho:1.5.1'
+
 
 }

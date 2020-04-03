@@ -6,14 +6,14 @@ import androidx.room.Room;
 
 public class DBRegister {
 
-    private static VtmDatabase DATABASE;
+    private static TimeLineDatabase DATABASE;
 
     public static void init(Application application) {
         //register database
-        DATABASE = Room.databaseBuilder(application, VtmDatabase.class, "mvtm_db").build();
+        DATABASE = Room.databaseBuilder(application, TimeLineDatabase.class, "timeline_db").build();
     }
 
-    public static VtmDatabase db() {
+    public static TimeLineDatabase db() {
         return DATABASE;
     }
 }

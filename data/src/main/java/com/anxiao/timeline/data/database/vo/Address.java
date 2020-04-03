@@ -2,15 +2,6 @@ package com.anxiao.timeline.data.database.vo;
 
 import androidx.room.ColumnInfo;
 
-/**
- * @author: anxiao
- * @version: V1.0
- * @project: MatmMobile
- * @package: com.chinasofti.matmmobile.data.model
- * @description: description
- * @date: 2019-12-31
- * @time: 11:18
- */
 public class Address {
 
     @ColumnInfo(name = "country")
@@ -22,8 +13,8 @@ public class Address {
     @ColumnInfo(name = "city")
     public String city;
 
-    @ColumnInfo(name = "area")
-    public String area;
+    @ColumnInfo(name = "district")
+    public String district;
 
     @ColumnInfo(name = "street")
     public String street;
