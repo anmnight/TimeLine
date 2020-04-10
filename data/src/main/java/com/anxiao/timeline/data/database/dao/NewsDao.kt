@@ -6,14 +6,12 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.anxiao.timeline.data.vo.News
 import io.reactivex.Completable
-import io.reactivex.Flowable
 import io.reactivex.Single
-import java.lang.annotation.RetentionPolicy
 
 @Dao
 interface NewsDao {
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(news: List<News>): Completable
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

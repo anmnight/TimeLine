@@ -7,7 +7,7 @@ import com.anxiao.timeline.data.database.DBRegister
 import com.anxiao.timeline.data.network.RestResponse
 import com.anxiao.timeline.data.network.Server
 import com.anxiao.timeline.data.vo.News
-import io.reactivex.Flowable
+import io.reactivex.Completable
 import io.reactivex.Single
 
 class NewsRepo {
@@ -32,9 +32,10 @@ class NewsRepo {
                     return services.getNews()
                 }
 
-                override fun saveCallResult(source: List<News>) {
-                    dao.insert(source)
+                override fun saveCallResult(source: List<News>): Completable {
+                    return dao.insert(source)
                 }
+
 
             }.asFlowable()
         )
