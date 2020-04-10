@@ -1,4 +1,4 @@
-package com.anxiao.timeline.data.database.vo;
+package com.anxiao.timeline.data.vo;
 
 import androidx.room.ColumnInfo;
 

@@ -1,152 +1,74 @@
 package com.anxiao.timeline.data.repo;
 
 import androidx.annotation.MainThread;
+import androidx.annotation.NonNull;
 import androidx.annotation.WorkerThread;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
-import androidx.lifecycle.Observer;
 
-import com.anxiao.timeline.data.ApiEmptyResponse;
-import com.anxiao.timeline.data.ApiErrorResponse;
-import com.anxiao.timeline.data.ApiResponse;
-import com.anxiao.timeline.data.ApiSuccessResponse;
-import com.anxiao.timeline.data.AppExecutors;
 import com.anxiao.timeline.data.Resource;
+import com.anxiao.timeline.data.Status;
+import com.anxiao.timeline.data.network.RestResponse;
 
-public abstract class NetworkBoundResource<ResultType, RequestType> {
+import org.reactivestreams.Publisher;
 
-    final private MediatorLiveData<Resource<ResultType>> result = new MediatorLiveData<>();
-    private AppExecutors mExecutors;
+import io.reactivex.BackpressureStrategy;
+import io.reactivex.Flowable;
+import io.reactivex.FlowableOnSubscribe;
+import io.reactivex.Single;
+import io.reactivex.SingleOnSubscribe;
+import io.reactivex.SingleSource;
+import io.reactivex.functions.Function;
 
-    public NetworkBoundResource(AppExecutors executors) {
-        this.mExecutors = executors;
+public abstract class NetworkBoundResource<ResultType> {
 
-        result.setValue(Resource.Companion.loading(null));
+    private final Flowable<Resource<ResultType>> result;
 
-        LiveData<ResultType> dbSource = loadFromDb();
 
-        result.addSource(dbSource, new Observer<ResultType>() {
-            @Override
-            public void onChanged(ResultType resultType) {
-                result.removeSource(dbSource);
-                if (shouldFetch(resultType)) {
-                    fetchFromNetwork(dbSource);
-                } else {
-                    result.addSource(dbSource, new Observer<ResultType>() {
-                        @Override
-                        public void onChanged(ResultType resultType) {
-                            setValue(Resource.Companion.success(resultType));
+    public NetworkBoundResource() {
+
+        Flowable<Resource<ResultType>> network;
+
+        try {
+            network = createCall()
+                    .flatMap((Function<RestResponse<ResultType>, SingleSource<Resource<ResultType>>>) resultTypeRestResponse -> {
+                        if (resultTypeRestResponse.getCode() == 200) {
+                            saveCallResult(resultTypeRestResponse.getResult());
+                            return Single.create((SingleOnSubscribe<Resource<ResultType>>) emitter -> emitter.onSuccess(new Resource<>(Status.SUCCESS, resultTypeRestResponse.getResult(), null)));
+                        } else {
+                            return Single.create((SingleOnSubscribe<Resource<ResultType>>) emitter -> emitter.onSuccess(new Resource<>(Status.ERROR, null, resultTypeRestResponse.getMessage())));
                         }
-                    });
-                }
-            }
-        });
-    }
-
-    private void fetchFromNetwork(LiveData<ResultType> dbResult) {
-
-        LiveData<ApiResponse<RequestType>> apiResponse = createCall();
-
-        result.addSource(dbResult, new Observer<ResultType>() {
-            @Override
-            public void onChanged(ResultType resultType) {
-                setValue(Resource.Companion.success(resultType));
-            }
-        });
-
-
-        result.addSource(apiResponse, new Observer<ApiResponse<RequestType>>() {
-            @Override
-            public void onChanged(ApiResponse<RequestType> requestTypeApiResponse) {
-
-                result.removeSource(dbResult);
-                result.removeSource(apiResponse);
-
-                if (requestTypeApiResponse instanceof ApiSuccessResponse) {
-                    mExecutors.diskIO().execute(new Runnable() {
-                        @Override
-                        public void run() {
-                            saveCallResult(processResponse((ApiSuccessResponse<RequestType>) requestTypeApiResponse));
-
-                            mExecutors.mainThread().execute(new Runnable() {
-                                @Override
-                                public void run() {
-                                    result.addSource(loadFromDb(), new Observer<ResultType>() {
-                                        @Override
-                                        public void onChanged(ResultType resultType) {
-                                            setValue(Resource.Companion.success(resultType));
-                                        }
-                                    });
-                                }
-                            });
-                        }
-                    });
-                }
-
-                if (requestTypeApiResponse instanceof ApiEmptyResponse) {
-                    mExecutors.mainThread().execute(new Runnable() {
-                        @Override
-                        public void run() {
-                            result.addSource(loadFromDb(), new Observer<ResultType>() {
-                                @Override
-                                public void onChanged(ResultType resultType) {
-                                    setValue(Resource.Companion.success(resultType));
-                                }
-                            });
-                        }
-                    });
-                }
-
-                if (requestTypeApiResponse instanceof ApiErrorResponse) {
-                    mExecutors.mainThread().execute(new Runnable() {
-                        @Override
-                        public void run() {
-                            onFetchFailed();
-                            result.addSource(dbResult, new Observer<ResultType>() {
-                                @Override
-                                public void onChanged(ResultType resultType) {
-                                    setValue(Resource.Companion.error(((ApiErrorResponse<RequestType>) requestTypeApiResponse).getErrorMessage(), resultType));
-                                }
-                            });
-                        }
-                    });
-                }
-            }
-        });
-    }
-
-
-    @MainThread
-    private void setValue(Resource<ResultType> newValue) {
-        if (result.getValue() != newValue) {
-            result.setValue(newValue);
+                    }).toFlowable();
+        } catch (Exception e) {
+            network = Flowable.error(new Throwable(e.getMessage()));
         }
+
+        Flowable<Resource<ResultType>> finalNetwork = network;
+
+        result = loadFromDb()
+                .flatMap((Function<ResultType, Publisher<Resource<ResultType>>>) resultType -> {
+                    if (shouldFetch(resultType)) {
+                        return finalNetwork;
+                    } else {
+                        return Flowable.create((FlowableOnSubscribe<Resource<ResultType>>) emitter -> emitter.onNext(new Resource<>(Status.SUCCESS, resultType, null)), BackpressureStrategy.ERROR);
+                    }
+                });
+
     }
 
-
-    public LiveData<Resource<ResultType>> asLiveData() {
+    public Flowable<Resource<ResultType>> asFlowable() {
         return result;
     }
 
-    protected void onFetchFailed() {
-    }
-
     @WorkerThread
-    protected RequestType processResponse(ApiSuccessResponse<RequestType> response) {
-        return response.getBody();
-    }
-
-    @WorkerThread
-    protected abstract void saveCallResult(RequestType source);
+    protected abstract void saveCallResult(@NonNull ResultType source);
 
     @MainThread
     protected abstract boolean shouldFetch(ResultType data);
 
     @MainThread
-    protected abstract LiveData<ResultType> loadFromDb();
+    protected abstract Flowable<ResultType> loadFromDb();
 
     @MainThread
-    protected abstract LiveData<ApiResponse<RequestType>> createCall();
+    protected abstract Single<RestResponse<ResultType>> createCall();
 
 
 }

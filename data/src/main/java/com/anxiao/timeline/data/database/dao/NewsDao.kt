@@ -1,0 +1,25 @@
+package com.anxiao.timeline.data.database.dao
+
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import com.anxiao.timeline.data.vo.News
+import io.reactivex.Completable
+import io.reactivex.Flowable
+import io.reactivex.Single
+import java.lang.annotation.RetentionPolicy
+
+@Dao
+interface NewsDao {
+
+    @Insert
+    fun insert(news: List<News>): Completable
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(news: News): Completable
+
+    @Query("SELECT * FROM NEWS")
+    fun find(): Flowable<List<News>>
+
+}

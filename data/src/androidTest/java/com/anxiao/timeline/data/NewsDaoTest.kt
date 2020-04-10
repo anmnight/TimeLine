@@ -4,12 +4,12 @@ import androidx.room.Room
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.anxiao.timeline.data.database.TimeLineDatabase
-import com.anxiao.timeline.data.vo.UserInfo
+import com.anxiao.timeline.data.vo.News
 import org.junit.*
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class UserDaoTest {
+class NewsDaoTest {
 
     private lateinit var database: TimeLineDatabase
 
@@ -32,16 +32,13 @@ class UserDaoTest {
     @Test
     fun testInsertUser() {
 
-        val user = UserInfo()
-        user.name = "anxiao"
-        user.sex = 1
-        user.birthday = 1999L
-        user.userId = "uid001"
-
-        database.userDao()
-            .insert(user)
+        val news = News(0, "path", "image", "title", "time")
+        database.newsDao()
+            .insert(news)
             .test()
             .assertComplete()
+
+
     }
 
 }

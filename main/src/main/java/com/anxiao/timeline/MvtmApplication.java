@@ -1,6 +1,7 @@
 package com.anxiao.timeline;
 
 import android.app.Application;
+
 import com.anxiao.timeline.data.database.DBRegister;
 
 /**
@@ -21,8 +22,7 @@ public class MvtmApplication extends Application {
 
         DBRegister.init(this);
 
-//        //init stetho
-//        Stetho.initializeWithDefaults(this);
+
 
     }
 }
