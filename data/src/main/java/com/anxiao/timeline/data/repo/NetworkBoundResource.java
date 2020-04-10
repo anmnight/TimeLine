@@ -7,16 +7,12 @@ import androidx.annotation.WorkerThread;
 import com.anxiao.timeline.data.Resource;
 import com.anxiao.timeline.data.Status;
 import com.anxiao.timeline.data.network.RestResponse;
-
-import org.reactivestreams.Publisher;
-
-import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
-import io.reactivex.FlowableOnSubscribe;
 import io.reactivex.Single;
 import io.reactivex.SingleOnSubscribe;
 import io.reactivex.SingleSource;
 import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 
 public abstract class NetworkBoundResource<ResultType> {
 
@@ -25,32 +21,33 @@ public abstract class NetworkBoundResource<ResultType> {
 
     public NetworkBoundResource() {
 
-        Flowable<Resource<ResultType>> network;
-
-        try {
-            network = createCall()
-                    .flatMap((Function<RestResponse<ResultType>, SingleSource<Resource<ResultType>>>) resultTypeRestResponse -> {
-                        if (resultTypeRestResponse.getCode() == 200) {
-                            saveCallResult(resultTypeRestResponse.getResult());
-                            return Single.create((SingleOnSubscribe<Resource<ResultType>>) emitter -> emitter.onSuccess(new Resource<>(Status.SUCCESS, resultTypeRestResponse.getResult(), null)));
-                        } else {
-                            return Single.create((SingleOnSubscribe<Resource<ResultType>>) emitter -> emitter.onSuccess(new Resource<>(Status.ERROR, null, resultTypeRestResponse.getMessage())));
-                        }
-                    }).toFlowable();
-        } catch (Exception e) {
-            network = Flowable.error(new Throwable(e.getMessage()));
-        }
-
-        Flowable<Resource<ResultType>> finalNetwork = network;
-
-        result = loadFromDb()
-                .flatMap((Function<ResultType, Publisher<Resource<ResultType>>>) resultType -> {
-                    if (shouldFetch(resultType)) {
-                        return finalNetwork;
+        Single<Resource<ResultType>> network = createCall()
+                .flatMap((Function<RestResponse<ResultType>, SingleSource<Resource<ResultType>>>) resultTypeRestResponse -> {
+                    if (resultTypeRestResponse.getCode() == 200) {
+                        saveCallResult(resultTypeRestResponse.getResult());
+                        return Single.create((SingleOnSubscribe<Resource<ResultType>>) emitter -> emitter.onSuccess(new Resource<>(Status.SUCCESS, resultTypeRestResponse.getResult(), null)));
                     } else {
-                        return Flowable.create((FlowableOnSubscribe<Resource<ResultType>>) emitter -> emitter.onNext(new Resource<>(Status.SUCCESS, resultType, null)), BackpressureStrategy.ERROR);
+                        return Single.create((SingleOnSubscribe<Resource<ResultType>>) emitter -> emitter.onSuccess(new Resource<>(Status.ERROR, null, resultTypeRestResponse.getMessage())));
                     }
-                });
+                })
+                .onErrorReturn(throwable -> new Resource<>(Status.ERROR, null, throwable.getMessage()));
+
+
+        Single<Resource<ResultType>> fetchData = loadFromDb()
+                .subscribeOn(Schedulers.io())
+                .flatMap((Function<ResultType, SingleSource<Resource<ResultType>>>) resultType -> {
+                    if (shouldFetch(resultType)) {
+                        return network;
+                    } else {
+                        return Single.create(emitter -> emitter.onSuccess(new Resource<>(Status.SUCCESS, resultType, null)));
+                    }
+                })
+                .onErrorReturn(throwable -> new Resource<>(Status.ERROR, null, throwable.getMessage()));
+        ;
+
+
+        result = Single.create((SingleOnSubscribe<Resource<ResultType>>) emitter -> emitter.onSuccess(new Resource<>(Status.LOADING, null, null)))
+                .concatWith(fetchData);
 
     }
 
@@ -65,7 +62,7 @@ public abstract class NetworkBoundResource<ResultType> {
     protected abstract boolean shouldFetch(ResultType data);
 
     @MainThread
-    protected abstract Flowable<ResultType> loadFromDb();
+    protected abstract Single<ResultType> loadFromDb();
 
     @MainThread
     protected abstract Single<RestResponse<ResultType>> createCall();

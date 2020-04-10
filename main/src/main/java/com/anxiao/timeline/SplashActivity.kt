@@ -30,7 +30,10 @@ class SplashActivity : AppCompatActivity() {
         viewModel.newsLiveData.observe(this,
             Observer {
 
-                Log.i("SplashActivity", "Resource : ${it.status.name}")
+                Log.i(
+                    "SplashActivity",
+                    "Resource : States ${it.status.name} message : ${it.message} result : ${it.data}"
+                )
 
             })
 

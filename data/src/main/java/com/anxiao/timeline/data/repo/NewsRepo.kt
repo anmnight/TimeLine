@@ -24,7 +24,7 @@ class NewsRepo {
                     return true
                 }
 
-                override fun loadFromDb(): Flowable<List<News>> {
+                override fun loadFromDb(): Single<List<News>> {
                     return dao.find()
                 }
 

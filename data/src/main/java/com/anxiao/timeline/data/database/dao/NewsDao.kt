@@ -20,6 +20,6 @@ interface NewsDao {
     fun insert(news: News): Completable
 
     @Query("SELECT * FROM NEWS")
-    fun find(): Flowable<List<News>>
+    fun find(): Single<List<News>>
 
 }
