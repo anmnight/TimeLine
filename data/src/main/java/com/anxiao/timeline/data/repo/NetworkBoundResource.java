@@ -10,72 +10,58 @@ import com.anxiao.timeline.data.network.RestResponse;
 
 import org.reactivestreams.Publisher;
 
-import java.util.Objects;
-
 import io.reactivex.Completable;
-import io.reactivex.CompletableSource;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
-import io.reactivex.SingleEmitter;
 import io.reactivex.SingleOnSubscribe;
-import io.reactivex.SingleSource;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
+
+import static com.anxiao.timeline.data.Status.LOADING;
 
 public abstract class NetworkBoundResource<ResultType> {
 
     private final Flowable<Resource<ResultType>> result;
 
-
     public NetworkBoundResource() {
 
         Single<ResultType> network = createCall()
-                .flatMap((Function<RestResponse<ResultType>, SingleSource<ResultType>>) resultTypeRestResponse -> {
+                .flatMap(resultTypeRestResponse -> {
                     if (resultTypeRestResponse.getCode() == 200) {
-                        return Single.create((SingleOnSubscribe<ResultType>) emitter -> emitter.onSuccess(resultTypeRestResponse.getResult()));
+                        return Single.just(resultTypeRestResponse.getResult());
                     } else {
-                        throw new Exception("on error with code : " + resultTypeRestResponse.getCode());
+                        return Single.error(new Throwable("net error with code : " + resultTypeRestResponse.getCode()));
                     }
                 });
 
         Single<Resource<ResultType>> database = loadFromDb()
-                .subscribeOn(Schedulers.io())
-                .flatMap((Function<ResultType, SingleSource<Resource<ResultType>>>) resultType -> Single.create(emitter -> emitter.onSuccess(new Resource<>(Status.SUCCESS, resultType, null))));
+                .map(resultType -> new Resource<>(Status.SUCCESS, resultType, null));
 
-
-        result = Single.create((SingleOnSubscribe<Resource<ResultType>>) emitter -> emitter.onSuccess(new Resource<>(Status.LOADING, null, null)))
+        result = Single.create((SingleOnSubscribe<Resource<ResultType>>) emitter -> emitter.onSuccess(new Resource<>(LOADING, null, null)))
                 .concatWith(database)
                 .flatMap((Function<Resource<ResultType>, Publisher<Resource<ResultType>>>) resultTypeResource -> {
-//                    if (shouldFetch(resultTypeResource.getData())) {
-//                        return network
-//                                .flatMapCompletable(resultType -> {
-//                                    if (resultType != null) {
-//                                        return saveCallResult(resultType);
-//                                    } else {
-//                                        return Completable.complete();
-//                                    }
-//                                })
-//                                .andThen(database)
-//                                .toFlowable();
-//                    } else {
-//                        return database.toFlowable();
-//                    }
-
-                    //todo cache network data
-                    return network
-                            .flatMapCompletable(resultType -> {
-                                if (resultType != null) {
-                                    return saveCallResult(resultType);
-                                } else {
-                                    return Completable.complete();
-                                }
-                            })
-                            .andThen(database)
-                            .toFlowable();
-
-
+                    if (resultTypeResource.getStatus() == Status.SUCCESS) {
+                        if (shouldFetch(resultTypeResource.getData())) {
+                            return network
+                                    .flatMapCompletable(this::saveCallResult)
+                                    .andThen(database)
+                                    .toFlowable();
+                        } else {
+                            return database.toFlowable();
+                        }
+                    } else {
+                        return Single.create((SingleOnSubscribe<Resource<ResultType>>) emitter -> emitter.onSuccess(resultTypeResource)).toFlowable();
+                    }
                 })
-                .onErrorReturn(throwable -> new Resource<>(Status.ERROR, null, throwable.getMessage()));
+                .subscribeOn(Schedulers.io())
+                .onErrorReturn(throwable -> {
+                    throwable.printStackTrace();
+                    if (throwable.getMessage() != null) {
+                        return new Resource<>(Status.ERROR, null, throwable.getMessage());
+                    } else {
+                        return new Resource<>(Status.ERROR, null, throwable.toString());
+                    }
+                });
 
     }
 
