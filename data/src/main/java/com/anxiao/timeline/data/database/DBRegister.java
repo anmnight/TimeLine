@@ -8,11 +8,11 @@ import com.facebook.stetho.Stetho;
 
 public class DBRegister {
 
-    public static TimeLineDatabase DATABASE;
+    private static TimeLineDatabase DATABASE;
 
-    public static void init(Application application) {
+    public static void init(Application application,String dbName) {
         //register database
-        DATABASE = Room.databaseBuilder(application, TimeLineDatabase.class, "timeline_db")
+        DATABASE = Room.databaseBuilder(application, TimeLineDatabase.class, dbName)
                 .build();
         //init stetho
         Stetho.initializeWithDefaults(application);

@@ -3,18 +3,13 @@ package com.anxiao.timeline.data.repo;
 import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 import androidx.annotation.WorkerThread;
-
 import com.anxiao.timeline.data.Resource;
-import com.anxiao.timeline.data.Status;
 import com.anxiao.timeline.data.network.RestResponse;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
 import io.reactivex.SingleOnSubscribe;
 import io.reactivex.schedulers.Schedulers;
-
-import static com.anxiao.timeline.data.Status.LOADING;
-import static com.anxiao.timeline.data.Status.SUCCESS;
 
 public abstract class NetworkBoundResource<ResultType> {
 
@@ -41,17 +36,18 @@ public abstract class NetworkBoundResource<ResultType> {
                     } else {
                         return loadFromDb();
                     }
-                }).map(resultType -> new Resource<>(SUCCESS, resultType, null));
+                }).map(Resource.Companion::success
+                );
 
-        result = Single.create((SingleOnSubscribe<Resource<ResultType>>) emitter -> emitter.onSuccess(new Resource<>(LOADING, null, null)))
+        result = Single.create((SingleOnSubscribe<Resource<ResultType>>) emitter -> emitter.onSuccess(Resource.Companion.loading(null)))
                 .concatWith(doDataStream)
                 .subscribeOn(Schedulers.io())
                 .onErrorReturn(throwable -> {
                     throwable.printStackTrace();
                     if (throwable.getMessage() != null) {
-                        return new Resource<>(Status.ERROR, null, throwable.getMessage());
+                        return Resource.Companion.error(throwable.getMessage(), null);
                     } else {
-                        return new Resource<>(Status.ERROR, null, throwable.toString());
+                        return Resource.Companion.error(throwable.getMessage(), null);
                     }
                 });
 
@@ -61,16 +57,13 @@ public abstract class NetworkBoundResource<ResultType> {
         return result;
     }
 
-    @WorkerThread
+
     protected abstract Completable saveCallResult(@NonNull ResultType source);
 
-    @MainThread
     protected abstract boolean shouldFetch(ResultType data);
 
-    @MainThread
     protected abstract Single<ResultType> loadFromDb();
 
-    @MainThread
     protected abstract Single<RestResponse<ResultType>> createCall();
 
 

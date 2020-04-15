@@ -20,7 +20,9 @@ public class MvtmApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        DBRegister.init(this);
+        DBRegister.init(this,"timeline_db");
+
+
 
 
 
