@@ -17,7 +17,7 @@
 
 ## 二 **数据层**：
 
-#####构建依赖：Rxjava，Room，Retrofit，Stetho，MockServer
+##### 构建依赖：Rxjava，Room，Retrofit，Stetho，MockServer
 
 
 
@@ -242,11 +242,11 @@ class SplashViewModel : ViewModel() {
 
 
 
-####拓展（packageName.expand）
+#### 拓展（packageName.expand）
 
-#####ExpandAppCompatActivity.kt：addFragment，removeFragment，replaceFragment
+##### ExpandAppCompatActivity.kt：addFragment，removeFragment，replaceFragment
 
-#####ExpandFragmentManager.kt：set default Transaction
+##### ExpandFragmentManager.kt：set default Transaction
 
 
 
