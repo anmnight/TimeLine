@@ -9,7 +9,7 @@
 
 ####APP构建原则
 
-<img src="/Users/anxiao/Desktop/UltraFramework使用说明（Android）/clean_architecture.png" alt="clean_architecture" style="zoom:67%;" />
+<img src="./clean_architecture.png" alt="clean_architecture" style="zoom:67%;" />
 
 
 
