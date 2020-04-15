@@ -2,12 +2,12 @@
 
 #### 本工程致力于帮助开发者快速构建标准Android工程，做到工程项目可持续集成，可测试。  
 
-####项目蓝图
+#### 项目蓝图
 <img src="./功能架构图.png" alt="功能架构图" style="zoom:67%;" />
 
 
 
-####APP构建原则
+#### APP构建原则
 
 <img src="./clean_architecture.png" alt="clean_architecture" style="zoom:67%;" />
 
@@ -15,7 +15,7 @@
 
 
 
-##二 **数据层**：
+## 二 **数据层**：
 
 #####构建依赖：Rxjava，Room，Retrofit，Stetho，MockServer
 
@@ -23,11 +23,11 @@
 
 #### **网络客户端构建**：
 
-#####说明：本项目中网络请求通过Retrofit+Okhttp 方式实现。通过packageName.data.network.Server 管理请求客户端的初始化与，通过Server.services（）对外暴露请求。  
+##### 说明：本项目中网络请求通过Retrofit+Okhttp 方式实现。通过packageName.data.network.Server 管理请求客户端的初始化与，通过Server.services（）对外暴露请求。  
 
-#####Remote为网络服务仓库，构建及使用见Retrofit[官网](https://square.github.io/retrofit/)
+##### Remote为网络服务仓库，构建及使用见Retrofit[官网](https://square.github.io/retrofit/)
 
-#####初始化
+##### 初始化
 
 ```kotlin
 init {
@@ -67,13 +67,13 @@ data class RestResponse<T>(val code: Int, val message: String, val result: T)
 
 
 
-####**本地数据服务构建**
+#### **本地数据服务构建**
 
-#####说明：本项目目前只对database 做管理，kv，file 数据服务暂时未实现，请同学们自己实现。管理类packageName.data.database.DBRegister  
+##### 说明：本项目目前只对database 做管理，kv，file 数据服务暂时未实现，请同学们自己实现。管理类packageName.data.database.DBRegister  
 
-#####数据库框架采用JetPack Room 组件，如何使用见[官网](https://developer.android.google.cn/training/data-storage/room?hl=zh-cn)
+##### 数据库框架采用JetPack Room 组件，如何使用见[官网](https://developer.android.google.cn/training/data-storage/room?hl=zh-cn)
 
-#####初始化：在Application中 onCreate 函数中 使用 init（）函数初始化。  
+##### 初始化：在Application中 onCreate 函数中 使用 init（）函数初始化。  
 
 ```java
 DBRegister.init(this,"dbName");
@@ -101,7 +101,7 @@ public class UserInfo {
 }
 ```
 
-#####Dao初始化 对上层暴露Rx观察者
+##### Dao初始化 对上层暴露Rx观察者
 
 ```kotlin
 @Dao
@@ -113,9 +113,9 @@ interface UserDao {
 
 
 
-####**对上层Repo构建**
+#### **对上层Repo构建**
 
-#####为防止耦合现象，数据层只应该对上层暴露Repo调用层 与 数据初始化相应类，Repo应按照一定规则建立（如，业务类型，接口版本）
+##### 为防止耦合现象，数据层只应该对上层暴露Repo调用层 与 数据初始化相应类，Repo应按照一定规则建立（如，业务类型，接口版本）
 
 ##### Repo初始化 对上层暴露LiveData
 
@@ -152,11 +152,11 @@ class NewsRepo {
 
 ##### 说明，类：
 
-- #####*Resource：请求状态，包含 状态，数据信息，请求说明 三项内容*
+- ##### *Resource：请求状态，包含 状态，数据信息，请求说明 三项内容*
 
-- #####*NetworkBoundResource:请求与状态绑定类，构建每条Service时需构建一个对象*
+- ##### *NetworkBoundResource:请求与状态绑定类，构建每条Service时需构建一个对象*
 
-  - ######回调函数说明：
+  - ###### 回调函数说明：
 
     - shouldFetch(data: T): Boolean : 判断是否从远端加载
     - loadFromDb(): Single<T> ：从数据库加载数据
@@ -165,7 +165,7 @@ class NewsRepo {
 
 
 
-####**数据测试**，高阶用法详见[官网](https://developer.android.com/training/testing)
+#### **数据测试**，高阶用法详见[官网](https://developer.android.com/training/testing)
 
 ##### API 测试：
 
@@ -216,7 +216,7 @@ class NewsDaoTest {
 
 
 
-##**三 视图**
+## **三 视图**
 
 #### ViewModel/Presenter：ViewModel 或者 Presenter 应只与下层产生关联（ Data 或者 domain ），只持有业务类或者Repo实例，只做触发Repo或者响应页面。
 
@@ -252,10 +252,10 @@ class SplashViewModel : ViewModel() {
 
 
 
-##**四 domain**
+## **四 domain**
 
 注：domain 层持有Rxjava 库，可配合Rx做业务开发，留给其他同学良好的代码阅读环境
 
 - ##### 本次根据具体业务适当添加，例如：在面向接口开发的情况下，一条Service对应一条业务，其实并不需要本层。
 
-- #####若复杂情况系下，一条业务需多条Service配合才能完成，则需要本层对其处理，暴露上层对应业务接口，上层只应持有本层实例
+- ##### 若复杂情况系下，一条业务需多条Service配合才能完成，则需要本层对其处理，暴露上层对应业务接口，上层只应持有本层实例
