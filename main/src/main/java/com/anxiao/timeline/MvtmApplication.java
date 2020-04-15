@@ -20,10 +20,10 @@ public class MvtmApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
+        CrashHandler.Companion.getHolder().init(this);
+
+
         DBRegister.init(this, "timeline_db");
-
-
-
 
 
     }

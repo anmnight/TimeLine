@@ -83,6 +83,9 @@ dependencies {
     implementation rootProject.ext.deps["butterknife"]
     kapt rootProject.ext.deps["butterknifeProcessor"]
 
+
+    implementation "androidx.recyclerview:recyclerview:1.1.0"
+
     implementation project(path: ':data')
 
 
