@@ -1,4 +1,4 @@
-package com.anxiao.timeline.expand.view
+package com.anxiao.timeline.expand.widget
 
 import android.util.SparseArray
 import android.view.View

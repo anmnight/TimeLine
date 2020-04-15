@@ -1,7 +1,7 @@
-package com.anxiao.timeline.data.repo;
+package com.anxiao.timeline.data.factory;
 
 import androidx.annotation.NonNull;
-import com.anxiao.timeline.data.Resource;
+
 import com.anxiao.timeline.data.network.RestResponse;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.anxiao.timeline.expand.unit
+package com.anxiao.timeline.unit
 
 import android.os.Handler
 import android.os.Looper

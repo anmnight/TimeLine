@@ -1,4 +1,4 @@
-package com.anxiao.timeline.expand.view
+package com.anxiao.timeline.expand.widget
 
 abstract class RVBaseCell<D>(data: D) : Cell {
 

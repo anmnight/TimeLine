@@ -1,8 +1,9 @@
-package com.anxiao.timeline.data.repo
+package com.anxiao.timeline.data
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.LiveDataReactiveStreams
-import com.anxiao.timeline.data.Resource
+import com.anxiao.timeline.data.factory.NetworkBoundResource
+import com.anxiao.timeline.data.factory.Resource
 import com.anxiao.timeline.data.database.DBRegister
 import com.anxiao.timeline.data.network.RestResponse
 import com.anxiao.timeline.data.network.Server

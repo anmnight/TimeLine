@@ -1,6 +1,6 @@
-package com.anxiao.timeline.expand.unit
+package com.anxiao.timeline.unit
 
-import com.anxiao.timeline.domain.executor.ThreadExecutor
+import com.anxiao.timeline.expand.executor.ThreadExecutor
 
 class BaseThreadExecutor : ThreadExecutor {
 

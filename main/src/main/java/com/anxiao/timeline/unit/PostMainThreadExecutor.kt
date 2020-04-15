@@ -1,8 +1,8 @@
-package com.anxiao.timeline.expand.unit
+package com.anxiao.timeline.unit
 
 import android.os.Handler
 import android.os.Looper
-import com.anxiao.timeline.domain.executor.PostExecutionThread
+import com.anxiao.timeline.expand.executor.PostExecutionThread
 import java.util.concurrent.Executor
 
 class PostMainThreadExecutor : PostExecutionThread {
