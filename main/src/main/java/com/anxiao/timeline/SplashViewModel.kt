@@ -17,9 +17,16 @@ class SplashViewModel : ViewModel() {
     var newsLiveData: LiveData<Resource<List<News>>> =
         Transformations.switchMap(_query) { repo.getNews() }
 
+    fun init(){
+        _query.value = "aaa"
+    }
 
     fun refresh() {
-        _query.value = "aaa"
+//        _query.value = "aaa"
+
+
+        repo.insert()
+
     }
 }
 

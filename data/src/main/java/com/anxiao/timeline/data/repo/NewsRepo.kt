@@ -41,5 +41,20 @@ class NewsRepo {
         )
     }
 
+    fun insert() {
+
+        Thread {
+            val news = News(123, "path", "image", "title", "passtime")
+            val disposable = dao.insert(news)
+                .subscribe(
+                    { println("success") },
+                    {
+                        it.printStackTrace()
+                        println(it.message)
+                    })
+        }.start()
+
+    }
+
 
 }

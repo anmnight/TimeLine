@@ -1,8 +1,6 @@
 package com.anxiao.timeline.data.repo;
 
-import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
-import androidx.annotation.WorkerThread;
 import com.anxiao.timeline.data.Resource;
 import com.anxiao.timeline.data.network.RestResponse;
 import io.reactivex.Completable;

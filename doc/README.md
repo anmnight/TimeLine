@@ -3,11 +3,14 @@
 #### 本工程致力于帮助开发者快速构建标准Android工程，做到工程项目可持续集成，可测试。  
 
 #### 项目蓝图
+
+
 <img src="./功能架构图.png" alt="功能架构图" style="zoom:67%;" />
 
 
 
 #### APP构建原则
+
 
 <img src="./clean_architecture.png" alt="clean_architecture" style="zoom:67%;" />
 

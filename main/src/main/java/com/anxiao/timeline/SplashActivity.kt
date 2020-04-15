@@ -38,9 +38,13 @@ class SplashActivity : AppCompatActivity() {
             })
 
 
+
+
         button.setOnClickListener {
             viewModel.refresh()
         }
+
+        viewModel.init()
 
     }
 
