@@ -17,15 +17,15 @@ import com.anxiao.timeline.expand.executor.ThreadExecutor;
  */
 public abstract class LiveDataUseCase<P, R> {
 
-    private ThreadExecutor mThreadExecutor;
-    private PostExecutionThread mPostExecutionThread;
-
-    public LiveDataUseCase(
-            ThreadExecutor threadExecutor,
-            PostExecutionThread postExecutionThread) {
-        mThreadExecutor = threadExecutor;
-        mPostExecutionThread = postExecutionThread;
-    }
+//    private ThreadExecutor mThreadExecutor;
+//    private PostExecutionThread mPostExecutionThread;
+//
+//    public LiveDataUseCase(
+//            ThreadExecutor threadExecutor,
+//            PostExecutionThread postExecutionThread) {
+//        mThreadExecutor = threadExecutor;
+//        mPostExecutionThread = postExecutionThread;
+//    }
 
     public abstract LiveData<Resource<R>> execute(P params) throws Exception;
 
