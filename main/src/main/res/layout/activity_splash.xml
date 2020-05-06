@@ -4,14 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.anxiao.timeline.views.NewsActivity"
+    tools:context=".views.SplashActivity"
     tools:ignore="MissingConstraints">
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/list_news"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
 
 
 </FrameLayout>

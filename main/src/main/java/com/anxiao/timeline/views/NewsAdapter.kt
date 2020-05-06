@@ -36,7 +36,6 @@ class NewsAdapter(private val context: Context) : RecyclerView.Adapter<NewsAdapt
         //设置滚动不加载
         Glide.with(holder.itemView)
             .load(news.image)
-            .placeholder(R.drawable.image_holder)
             .optionalCenterCrop()
             .into(holder.image)
     }
