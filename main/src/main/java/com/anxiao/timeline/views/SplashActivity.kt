@@ -1,34 +1,41 @@
 package com.anxiao.timeline.views
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.anxiao.timeline.R
-import com.anxiao.timeline.TimeLineApplication
-import com.qmuiteam.qmui.kotlin.onClick
-import kotlinx.android.synthetic.main.activity_splash.*
+import com.anxiao.timeline.views.fragments.AdFragment
 
 class SplashActivity : AppCompatActivity() {
 
+    private val _loading_without_ad = 3000
+    private val _loading_with_ad = 1000
+    private lateinit var adFragment:AdFragment
 
-    private var temp = 0L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        window.decorView.background = null
 
-        window.decorView.viewTreeObserver.addOnPreDrawListener {
-            println("Startup Spend : ${System.currentTimeMillis() - TimeLineApplication.time}")
-            true
-        }
+        //todo create ad (FragmentDialog to show AD)
+        //not have ad resource show splash 3s
+        //have ad resource show 1s ,load ad fragmentDialog
 
-        button.onClick {
-            startActivity(Intent(this@SplashActivity, ChartsActivity::class.java))
-        }
+
+
 
     }
 
+
+
+    private fun createAdDialog(){
+
+
+
+    }
+
+    private fun navToMain(){
+
+    }
 
 }
