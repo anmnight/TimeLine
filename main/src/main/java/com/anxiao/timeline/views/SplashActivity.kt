@@ -1,14 +1,12 @@
 package com.anxiao.timeline.views
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.ViewTreeObserver
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.anxiao.timeline.R
 import com.anxiao.timeline.TimeLineApplication
+import com.qmuiteam.qmui.kotlin.onClick
+import kotlinx.android.synthetic.main.activity_splash.*
 
 class SplashActivity : AppCompatActivity() {
 
@@ -24,6 +22,10 @@ class SplashActivity : AppCompatActivity() {
         window.decorView.viewTreeObserver.addOnPreDrawListener {
             println("Startup Spend : ${System.currentTimeMillis() - TimeLineApplication.time}")
             true
+        }
+
+        button.onClick {
+            startActivity(Intent(this@SplashActivity, ChartsActivity::class.java))
         }
 
     }
