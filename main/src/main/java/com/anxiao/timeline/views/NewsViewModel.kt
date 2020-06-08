@@ -9,7 +9,7 @@ class NewsViewModel : ViewModel() {
     private var repo: NewsRepo = NewsRepo()
 
 
-    val newsLiveData = repo.getNews()
+
 
 
     fun test(){

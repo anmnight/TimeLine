@@ -4,15 +4,22 @@ import androidx.room.Room
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.anxiao.timeline.data.database.TimeLineDatabase
-import com.anxiao.timeline.data.vo.News
+import com.anxiao.timeline.data.network.RemoteService
+import com.anxiao.timeline.data.network.Server
 import kotlinx.coroutines.runBlocking
 import org.junit.*
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class NewsDaoTest {
+class NewsReposTest {
 
     private lateinit var database: TimeLineDatabase
+    private lateinit var api :RemoteService
+
+    private lateinit var newsRepo: NewsRepo
+
+    //todo mock 正例 反例 及特殊情况
+
 
     @Before
     fun createDb() {
@@ -23,6 +30,10 @@ class NewsDaoTest {
             .allowMainThreadQueries()
             .build()
 
+        api = Server.services()
+
+        newsRepo = NewsRepo(api,database.newsDao())
+
     }
 
     @After
@@ -32,12 +43,12 @@ class NewsDaoTest {
 
     @Test
     fun testInsertUser() {
-        val news = News(0, "path", "image", "title", "time")
+
         runBlocking {
-            database.newsDao().insert(news)
-            val result = database.newsDao().find()
-            Assert.assertEquals(result.size, 1)
+            val result = newsRepo.getNews()
+            println(result)
         }
+
 
     }
 
