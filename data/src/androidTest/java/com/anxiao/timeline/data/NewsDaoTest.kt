@@ -5,6 +5,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.anxiao.timeline.data.database.TimeLineDatabase
 import com.anxiao.timeline.data.vo.News
+import kotlinx.coroutines.runBlocking
 import org.junit.*
 import org.junit.runner.RunWith
 
@@ -33,10 +34,19 @@ class NewsDaoTest {
     fun testInsertUser() {
 
         val news = News(0, "path", "image", "title", "time")
-        database.newsDao()
-            .insert(news)
-            .test()
-            .assertComplete()
+
+        runBlocking {
+            database.newsDao()
+                .insert(news)
+                .test()
+                .assertComplete()
+        }
+
+
+
+
+
+
 
 
     }

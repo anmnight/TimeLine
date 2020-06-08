@@ -1,6 +1,7 @@
 package com.anxiao.timeline.views
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.anxiao.timeline.data.NewsRepo
 
 class NewsViewModel : ViewModel() {
@@ -10,6 +11,9 @@ class NewsViewModel : ViewModel() {
 
     val newsLiveData = repo.getNews()
 
+
+    fun test(){
+    }
 
 }
 
