@@ -1,4 +1,4 @@
-package com.anxiao.timeline.expand.widget
+package com.anxiao.timeline.widget
 
 import android.view.ViewGroup
 

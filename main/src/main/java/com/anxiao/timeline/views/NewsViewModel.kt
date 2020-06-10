@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.anxiao.timeline.data.NewsRepo
 import com.anxiao.timeline.data.database.dao.NewsDao
 import com.anxiao.timeline.data.network.RemoteService
-import com.anxiao.timeline.expand.checkResult
+import com.anxiao.timeline.checkResult
 import kotlinx.coroutines.launch
 
 class NewsViewModel : ViewModel() {
