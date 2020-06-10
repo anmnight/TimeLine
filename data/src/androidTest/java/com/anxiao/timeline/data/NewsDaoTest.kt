@@ -31,14 +31,12 @@ class NewsDaoTest {
     }
 
     @Test
-    fun testInsertUser() {
+    fun testInsertUser() = runBlocking {
         val news = News(0, "path", "image", "title", "time")
-        runBlocking {
-            database.newsDao().insert(news)
-            val result = database.newsDao().find()
-            Assert.assertEquals(result.size, 1)
-        }
-
+        database.newsDao().insert(news)
+        val result = database.newsDao().find()
+        Assert.assertEquals(result.size, 1)
     }
+
 
 }

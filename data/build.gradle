@@ -42,6 +42,9 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
+    testImplementation 'org.mockito:mockito-core:3.0.0'
+    androidTestImplementation 'org.mockito:mockito-android:3.0.0'
+
     testImplementation 'androidx.room:room-testing:2.2.5'
     testImplementation 'com.squareup.okhttp3:mockwebserver:4.7.2'
 
