@@ -1,4 +1,4 @@
-package com.anxiao.timeline.views
+package com.anxiao.timeline.views.news
 
 import android.content.Context
 import android.view.LayoutInflater
