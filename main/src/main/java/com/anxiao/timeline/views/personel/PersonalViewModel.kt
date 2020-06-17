@@ -8,6 +8,8 @@ import kotlinx.coroutines.launch
 
 class PersonalViewModel : ViewModel() {
 
+    //todo 获取有构造函数的 vm
+
     private val _queryProvinces = MutableLiveData<PersonalView>()
 
     val queryProvinces: LiveData<PersonalView>
@@ -15,9 +17,9 @@ class PersonalViewModel : ViewModel() {
 
     fun getProvinces() = viewModelScope.launch {
 
-        val result = ProvinceRepo().provincesList()
-
         _queryProvinces.value = PersonalView(true, listOf())
+
+        val result = ProvinceRepo().provincesList()
 
         result.checkResult(
             onSuccess = {

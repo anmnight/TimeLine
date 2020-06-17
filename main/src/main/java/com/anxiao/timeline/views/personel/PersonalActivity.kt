@@ -24,12 +24,14 @@ class PersonalActivity : AppCompatActivity() {
 
         personalViewModel.queryProvinces.observe(this, Observer {
 
+            println("show: ${it.dialogIsShow} ,thread ${Thread.currentThread().name}")
+
             if (it.dialogIsShow)
                 showProgressDialog()
             else
                 dismissProgressDialog()
-
-            println(it.provinces)
+//
+//            println(it.provinces)
 
         })
 

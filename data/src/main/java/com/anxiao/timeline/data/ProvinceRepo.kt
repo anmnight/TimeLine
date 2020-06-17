@@ -3,19 +3,43 @@ package com.anxiao.timeline.data
 import com.anxiao.timeline.data.cities.City
 import com.anxiao.timeline.data.cities.Province
 import com.anxiao.timeline.data.network.Result
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
 import org.jsoup.Jsoup
+import java.lang.Exception
 import java.util.*
 
 class ProvinceRepo {
 
-
-    // 2018年11月中华人民共和国县以上行政区划代码网页
     suspend fun provincesList(): Result<List<Province>> = withContext(Dispatchers.IO) {
+
+        return@withContext executeResponse(buildProvinces())
+    }
+
+    private suspend fun executeResponse(
+        response: List<Province>,
+        successBlock: (suspend CoroutineScope.() -> Unit)? = null,
+        errorBlock: (suspend CoroutineScope.() -> Unit)? = null
+    ): Result<List<Province>> {
+        return coroutineScope {
+            if (response.isNullOrEmpty()) {
+                errorBlock?.let { it() }
+                Result.Error(Exception("province is null"))
+            } else {
+                successBlock?.let { it() }
+                Result.Success(response)
+            }
+        }
+    }
+
+    private fun buildProvinces(): List<Province> {
+
         // 2018年11月中华人民共和国县以上行政区划代码网页
         val doc =
-            Jsoup.connect("http://www.mca.gov.cn/article/sj/xzqh/2018/201804-12/20181101021046.html").maxBodySize(0).get()
+            Jsoup.connect("http://www.mca.gov.cn/article/sj/xzqh/2018/201804-12/20181101021046.html")
+                .maxBodySize(0).get()
         val elements = doc.getElementsByClass("xl7024197")
         val stringList = elements.eachText()
         val stringName: MutableList<String> = ArrayList()
@@ -121,10 +145,8 @@ class ProvinceRepo {
             }
             provinceList.add(province)
         }
-        return@withContext Result.Success(provinceList)
-
+        return provinceList
     }
-
 
     private fun isContainer(
         cityCodeList: List<String>,
