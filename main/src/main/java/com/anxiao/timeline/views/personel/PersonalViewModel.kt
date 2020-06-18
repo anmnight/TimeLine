@@ -6,10 +6,8 @@ import com.anxiao.timeline.data.ProvinceRepo
 import com.anxiao.timeline.data.cities.Province
 import kotlinx.coroutines.launch
 
-class PersonalViewModel : ViewModel() {
-
-    //todo 获取有构造函数的 vm
-
+class PersonalViewModel(private val provinceRepo: ProvinceRepo) : ViewModel() {
+    
     private val _queryProvinces = MutableLiveData<PersonalView>()
 
     val queryProvinces: LiveData<PersonalView>
@@ -17,9 +15,10 @@ class PersonalViewModel : ViewModel() {
 
     fun getProvinces() = viewModelScope.launch {
 
+
         _queryProvinces.value = PersonalView(true, listOf())
 
-        val result = ProvinceRepo().provincesList()
+        val result = provinceRepo.provincesList()
 
         result.checkResult(
             onSuccess = {

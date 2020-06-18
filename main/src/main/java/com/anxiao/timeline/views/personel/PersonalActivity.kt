@@ -3,10 +3,7 @@ package com.anxiao.timeline.views.personel
 import android.app.ProgressDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
-import androidx.lifecycle.ViewModelStore
+import androidx.lifecycle.*
 import com.anxiao.timeline.R
 import com.anxiao.timeline.data.ProvinceRepo
 import kotlinx.android.synthetic.main.activity_personal.*
@@ -20,7 +17,11 @@ class PersonalActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_personal)
 
-        personalViewModel = defaultViewModelProviderFactory.create(PersonalViewModel::class.java)
+
+        val repo = ProvinceRepo()
+        val factory = ProvinceViewModelFactory(repo)
+
+        personalViewModel = ViewModelProviders.of(this, factory).get(PersonalViewModel::class.java)
 
         personalViewModel.queryProvinces.observe(this, Observer {
 
