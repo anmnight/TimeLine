@@ -7,11 +7,17 @@ import androidx.lifecycle.*
 import com.anxiao.timeline.R
 import com.anxiao.timeline.data.ProvinceRepo
 import kotlinx.android.synthetic.main.activity_personal.*
+import kotlin.properties.Delegates
+
+
 
 class PersonalActivity : AppCompatActivity() {
 
-
     private lateinit var personalViewModel: PersonalViewModel
+
+    private var name: String by Delegates.observable("anxioa", { prop, old, new ->
+        println("prop: $prop ,old: $old new: $new")
+    })
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,7 +27,7 @@ class PersonalActivity : AppCompatActivity() {
         val repo = ProvinceRepo()
         val factory = ProvinceViewModelFactory(repo)
 
-        personalViewModel = ViewModelProviders.of(this, factory).get(PersonalViewModel::class.java)
+        personalViewModel = ViewModelProvider(viewModelStore, factory).get(PersonalViewModel::class.java)
 
         personalViewModel.queryProvinces.observe(this, Observer {
 
@@ -38,7 +44,12 @@ class PersonalActivity : AppCompatActivity() {
 
 
         button.setOnClickListener {
-            personalViewModel.getProvinces()
+//            personalViewModel.getProvinces()
+
+            name = "zhang"
+            name = "wang"
+            name = "li"
+
         }
     }
 

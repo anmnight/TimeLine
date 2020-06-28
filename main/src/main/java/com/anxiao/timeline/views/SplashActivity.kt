@@ -3,13 +3,14 @@ package com.anxiao.timeline.views
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.anxiao.timeline.R
+import com.anxiao.timeline.debug
 import com.anxiao.timeline.views.fragments.AdFragment
 
 class SplashActivity : AppCompatActivity() {
 
     private val _loading_without_ad = 3000
     private val _loading_with_ad = 1000
-    private lateinit var adFragment:AdFragment
+    private lateinit var adFragment: AdFragment
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,17 +23,17 @@ class SplashActivity : AppCompatActivity() {
         //have ad resource show 1s ,load ad fragmentDialog
 
 
+       debug(classLoader.toString())
 
 
     }
 
 
-
-    private fun createAdDialog(){
+    private fun createAdDialog() {
 
     }
 
-    private fun navToMain(){
+    private fun navToMain() {
 
     }
 

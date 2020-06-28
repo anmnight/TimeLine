@@ -1,5 +1,6 @@
 package com.anxiao.timeline
 
+import android.util.Log
 import com.anxiao.timeline.data.network.Result
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -47,4 +48,8 @@ inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> Unit) {
     )
     fragmentTransaction.func()
     fragmentTransaction.commit()
+}
+
+fun AppCompatActivity.debug(message: Any?) {
+    Log.d(Thread.currentThread().name, message.toString())
 }
