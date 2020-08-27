@@ -2,10 +2,9 @@ package com.anxiao.timeline.views
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.anxiao.core.debug
 import com.anxiao.timeline.R
-import com.anxiao.timeline.debug
 import com.anxiao.timeline.views.fragments.AdFragment
-
 class SplashActivity : AppCompatActivity() {
 
     private val _loading_without_ad = 3000
@@ -23,8 +22,9 @@ class SplashActivity : AppCompatActivity() {
         //have ad resource show 1s ,load ad fragmentDialog
 
 
-       debug(classLoader.toString())
+        debug(classLoader.toString())
 
+//        startActivity(Intent(this, PersonalActivity::class.java))
 
     }
 

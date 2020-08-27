@@ -2,40 +2,22 @@ package com.anxiao.timeline.views.news
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.anxiao.timeline.data.NewsRepo
-import com.anxiao.timeline.data.database.dao.NewsDao
-import com.anxiao.timeline.data.network.RemoteService
-import com.anxiao.timeline.checkResult
-import kotlinx.coroutines.launch
+import com.anxiao.core.interactor.UseCase
+import com.anxiao.core.platform.BaseViewModel
+import com.anxiao.timeline.data.vo.News
 
-class NewsViewModel : ViewModel() {
+class NewsViewModel constructor(private val getNews: GetNews) : BaseViewModel() {
 
-    private lateinit var dao: NewsDao
-    private lateinit var api: RemoteService
-    private lateinit var newsRepo: NewsRepo
+    private val _queryNews = MutableLiveData<List<News>>()
 
-
-    private var _query = MutableLiveData<String>()
-
-//    private var newsLiveData:LiveData<>
+    val news: LiveData<List<News>> = _queryNews
 
     fun loadNews() =
+        getNews.invoke(UseCase.None()) { it.fold(::handlerFailure, ::handlerNewsList) }
 
-        viewModelScope.launch {
-            val result = newsRepo.getNews()
-
-            result.checkResult(
-                onSuccess = {
-                    println("")
-                },
-
-                onError = {
-                    println(it)
-                }
-            )
-        }
+    private fun handlerNewsList(news: List<News>) {
+        _queryNews.value = news
+    }
 
 
 }

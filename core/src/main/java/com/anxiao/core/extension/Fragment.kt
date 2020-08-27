@@ -1,29 +1,10 @@
-package com.anxiao.timeline
+package com.anxiao.core.extension
 
-import android.util.Log
-import com.anxiao.timeline.data.network.Result
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
-
-inline fun <T : Any> Result<T>.checkResult(
-    crossinline onSuccess: (T) -> Unit,
-    crossinline onError: (String?) -> Unit
-) {
-    if (this is Result.Success) {
-        onSuccess(data)
-    } else if (this is Result.Error) {
-        onError(exception.message)
-    }
-}
-
-inline fun <T : Any> Result<T>.checkSuccess(success: (T) -> Unit) {
-    if (this is Result.Success) {
-        success(data)
-    }
-}
-
+import com.anxiao.core.R
 
 fun AppCompatActivity.addFragment(fragment: Fragment, frameId: Int) {
     supportFragmentManager.inTransaction { add(frameId, fragment) }
@@ -48,8 +29,4 @@ inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> Unit) {
     )
     fragmentTransaction.func()
     fragmentTransaction.commit()
-}
-
-fun AppCompatActivity.debug(message: Any?) {
-    Log.d(Thread.currentThread().name, message.toString())
 }

@@ -25,11 +25,4 @@ object Server {
     }
 
 
-    fun services(): RemoteService {
-        return client.create(RemoteService::class.java)
-    }
-
-
-
-
 }

@@ -9,4 +9,5 @@
     <color name="unclickable">#525252</color>
     <color name="nav_button_text">#3127AB</color>
     <color name="green">#65D584</color>
+    <color name="transparent_background">#50FFFFFF</color>
 </resources>

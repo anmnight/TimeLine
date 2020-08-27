@@ -9,7 +9,7 @@ import org.junit.runners.JUnit4
 class ProcesserTest {
 
 
-    val processer = ProvinceRepo()
+    val processer = RegionRepository()
 
     @Test
     fun testProcesserGetDataNomal() {

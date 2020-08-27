@@ -32,7 +32,6 @@ class NewsAdapter(private val context: Context) : RecyclerView.Adapter<NewsAdapt
     override fun onBindViewHolder(holder: NewsItemVH, position: Int) {
         val news = newsList[position]
         holder.title.text = news.title
-        holder.passtime.text = news.passtime
         //设置滚动不加载
         Glide.with(holder.itemView)
             .load(news.image)
@@ -49,7 +48,6 @@ class NewsAdapter(private val context: Context) : RecyclerView.Adapter<NewsAdapt
     class NewsItemVH(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val title: TextView = itemView.findViewById(R.id.title)
         val image: ImageView = itemView.findViewById(R.id.image)
-        val passtime: TextView = itemView.findViewById(R.id.passtime)
     }
 
 }

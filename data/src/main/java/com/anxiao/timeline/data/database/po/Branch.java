@@ -1,6 +1,5 @@
 package com.anxiao.timeline.data.database.po;
 
-import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -8,7 +7,6 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "branches")
 public class Branch {
 
-    @NonNull
     @PrimaryKey
     @ColumnInfo(name = "branch_no")
     public String branchNo;
