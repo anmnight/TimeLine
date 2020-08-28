@@ -3,7 +3,7 @@ package com.anxiao.timeline.data
 import androidx.room.Room
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.anxiao.timeline.data.database.TimeLineDatabase
+import com.anxiao.timeline.data.local.TimeLineDatabase
 import com.anxiao.timeline.data.vo.News
 import kotlinx.coroutines.runBlocking
 import org.junit.*

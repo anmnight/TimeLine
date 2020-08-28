@@ -1,9 +1,9 @@
-package com.anxiao.timeline.data.database;
+package com.anxiao.timeline.data.local;
 
 import androidx.room.Database;
 import androidx.room.RoomDatabase;
 
-import com.anxiao.timeline.data.database.dao.NewsDao;
+import com.anxiao.timeline.data.local.dao.NewsDao;
 import com.anxiao.timeline.data.vo.News;
 
 

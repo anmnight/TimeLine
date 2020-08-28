@@ -1,4 +1,4 @@
-package com.anxiao.timeline.data.database.po
+package com.anxiao.timeline.data.local.po
 
 import androidx.room.*
 

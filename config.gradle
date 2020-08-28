@@ -8,7 +8,7 @@ ext {
             compileSdkVersion: 28,
             buildToolsVersion: "29.0.2",
             applicationId    : "com.anxiao.timeline",
-            minSdkVersion    : 21,
+            minSdkVersion    : 23,
             targetSdkVersion : 29,
             versionCode      : gitVersion,
             versionName      : "1.0.0"]

@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import android.util.TypedValue
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 
 object Regular {
     const val telNum =
@@ -35,5 +36,9 @@ fun px2dp(context: Context, px: Float): Float {
 }
 
 fun AppCompatActivity.debug(message: Any?) {
+    Log.d(Thread.currentThread().name, message.toString())
+}
+
+fun Fragment.debug(message: Any?) {
     Log.d(Thread.currentThread().name, message.toString())
 }

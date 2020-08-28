@@ -6,8 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
-import com.anxiao.core.extension.observe
+import com.anxiao.core.debug
+import com.anxiao.core.exception.Failure
 import com.anxiao.timeline.R
+import com.anxiao.timeline.data.vo.News
 
 class NewsFragment : Fragment() {
 
@@ -27,11 +29,35 @@ class NewsFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        viewModel = ViewModelProvider(this).get(NewsViewModel::class.java)
+        viewModel =
+            ViewModelProvider(
+                viewModelStore,
+                NewsViewModelFactory(activity!!.applicationContext),
+            ).get(NewsViewModel::class.java)
+
+        viewModel.failure.observe(viewLifecycleOwner, {
+            when (it) {
+                Failure.ServerError -> handlerServerError()
+            }
+        })
+
+        viewModel.queryNews.observe(viewLifecycleOwner, {
+            renderNewsList(it)
+        })
+
+        viewModel.loadNews()
+    }
 
 
+    private fun renderNewsList(news: List<News>) {
 
+        debug("news list size : ${news.size}")
 
+    }
+
+    private fun handlerServerError() {
+
+        debug("handlerServerError")
     }
 
 }

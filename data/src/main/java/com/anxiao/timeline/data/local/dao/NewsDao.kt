@@ -1,4 +1,4 @@
-package com.anxiao.timeline.data.database.dao
+package com.anxiao.timeline.data.local.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
@@ -10,12 +10,12 @@ import com.anxiao.timeline.data.vo.News
 interface NewsDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(news: List<News>)
+    fun insert(news: List<News>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(news: News)
+    fun insert(news: News)
 
     @Query("SELECT * FROM NEWS")
-    suspend fun find(): List<News>
+    fun find(): List<News>
 
 }

@@ -1,7 +1,7 @@
 package com.anxiao.timeline.data
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.anxiao.timeline.data.database.dao.NewsDao
+import com.anxiao.timeline.data.local.dao.NewsDao
 import com.anxiao.timeline.data.network.RemoteService
 import com.anxiao.timeline.data.network.RestResponse
 import com.anxiao.timeline.data.network.Result

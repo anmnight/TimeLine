@@ -1,4 +1,4 @@
-package com.anxiao.timeline.data.database;
+package com.anxiao.timeline.data.local;
 
 import android.app.Application;
 
