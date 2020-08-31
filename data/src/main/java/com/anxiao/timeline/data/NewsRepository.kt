@@ -6,8 +6,11 @@ import com.anxiao.core.platform.NetworkHandler
 import com.anxiao.timeline.data.local.CacheFailure
 import com.anxiao.timeline.data.local.dao.NewsDao
 import com.anxiao.timeline.data.network.NewsService
+import com.anxiao.timeline.data.network.api.NewsNetFailure
+import com.anxiao.timeline.data.network.api.NewsResponse
 import com.anxiao.timeline.data.vo.News
 import retrofit2.Call
+import java.lang.Exception
 
 
 interface NewsRepository {
@@ -19,6 +22,7 @@ interface NewsRepository {
         override fun news(): Either<Failure, List<News>> {
 
             val cache = dao.find()
+
             return when (cache.size) {
                 0 -> Either.Left(CacheFailure.EmptyCacheFailure())
                 else -> Either.Right(cache)
@@ -37,7 +41,14 @@ interface NewsRepository {
 
         override fun news(): Either<Failure, List<News>> {
             return when (networkHandler.isConnected) {
-                true -> request(service.getNews(), { it.map { news: News -> news } }, emptyList())
+                true -> request(
+                    service.getNews(),
+                    { handlerException(it) },
+                    NewsResponse(
+                        200, "default",
+                        emptyList()
+                    )
+                )
                 false, null -> Either.Left(Failure.NetworkConnection)
             }
         }
@@ -54,12 +65,19 @@ interface NewsRepository {
             return try {
                 val response = call.execute()
                 when (response.isSuccessful) {
-                    true -> Either.Right(transform(response.body() ?: default))
                     false -> Either.Left(Failure.ServerError)
+                    true -> Either.Right(transform(response.body() ?: default))
                 }
             } catch (exception: Throwable) {
                 Either.Left(Failure.ServerError)
             }
+        }
+    }
+
+    fun <T> handlerException(response: NewsResponse<T>): T {
+        return when (response.code) {
+            in 200..209 -> response.result
+            else -> throw Exception("Server error")
         }
     }
 

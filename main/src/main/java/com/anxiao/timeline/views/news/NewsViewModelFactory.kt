@@ -16,7 +16,7 @@ class NewsViewModelFactory(val context: Context) : ViewModelProvider.Factory {
             GetNews(
                 NewsRepository.Network(
                     NetworkHandler(context),
-                    NewsService(Server().retorfit())
+                    NewsService(Server().retrofit())
                 )
             )
 

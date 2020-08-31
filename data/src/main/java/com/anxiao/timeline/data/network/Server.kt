@@ -11,7 +11,7 @@ class Server {
     init {
 
         val logLevel = HttpLoggingInterceptor()
-        logLevel.level = HttpLoggingInterceptor.Level.BODY
+        logLevel.level = HttpLoggingInterceptor.Level.BASIC
 
         val callClient = OkHttpClient.Builder()
             .addInterceptor(logLevel)
@@ -24,6 +24,6 @@ class Server {
             .build()
     }
 
-    fun retorfit() = client
+    fun retrofit() = client
 
 }

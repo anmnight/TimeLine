@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
         newsFragment = NewsFragment.newInstance()
 
         val ts = supportFragmentManager.beginTransaction()
-        ts.add(R.id.content, newsFragment, )
+        ts.add(R.id.content, newsFragment)
         ts.commitNow()
 
 //        findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
