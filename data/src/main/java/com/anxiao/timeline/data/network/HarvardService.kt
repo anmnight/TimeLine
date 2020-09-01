@@ -10,8 +10,12 @@ class HarvardService(retrofit: Retrofit) : HarvardApi {
 
     private val harvardApi by lazy { retrofit.create(HarvardApi::class.java) }
 
-    override fun getHarvardartmuseumsImage(index: Int): Call<HarvardResponse<HarvardImage>> {
-        return harvardApi.getHarvardartmuseumsImage(index)
+    override fun getHarvardImages(index: Int): Call<HarvardResponse<HarvardImage>> {
+        return harvardApi.getHarvardImages(index)
+    }
+
+    override fun getHarvardImageDetails(imageId: Int): Call<HarvardImage> {
+        return harvardApi.getHarvardImageDetails(imageId)
     }
 
 }

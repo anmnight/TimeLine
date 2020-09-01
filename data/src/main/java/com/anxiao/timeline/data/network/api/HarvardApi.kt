@@ -14,7 +14,10 @@ interface HarvardApi {
     }
 
     @GET("/image?apikey=${key}")
-    fun getHarvardartmuseumsImage(@Query("index") index: Int): Call<HarvardResponse<HarvardImage>>
+    fun getHarvardImages(@Query("index") index: Int): Call<HarvardResponse<HarvardImage>>
 
+
+    @GET("/image/{imageId}?apikey=${key}")
+    fun getHarvardImageDetails(@Path("imageId") imageId: Int): Call<HarvardImage>
 
 }

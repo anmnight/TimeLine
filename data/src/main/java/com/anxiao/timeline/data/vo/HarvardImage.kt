@@ -20,4 +20,8 @@ class HarvardImage {
     var format: String? = null
     var technique: String? = null
     var lastupdate: String? = null
+
+    companion object {
+        fun empaty() = HarvardImage()
+    }
 }
