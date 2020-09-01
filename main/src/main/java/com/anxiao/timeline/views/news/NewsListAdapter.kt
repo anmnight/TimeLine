@@ -21,7 +21,7 @@ class NewsListAdapter(val context: Context) : RecyclerView.Adapter<NewsListAdapt
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
-        return VH(LayoutInflater.from(context).inflate(R.layout.item_news, parent, true))
+        return VH(LayoutInflater.from(context).inflate(R.layout.item_news, parent, false))
     }
 
     override fun onBindViewHolder(holder: VH, position: Int) {
@@ -29,6 +29,7 @@ class NewsListAdapter(val context: Context) : RecyclerView.Adapter<NewsListAdapt
         holder.title.text = news.title
         Glide.with(context)
             .load(news.image)
+            .centerCrop()
             .into(holder.image)
     }
 
@@ -38,10 +39,12 @@ class NewsListAdapter(val context: Context) : RecyclerView.Adapter<NewsListAdapt
 
     fun loadMore(newNews: List<News>) {
         mNews.addAll(newNews)
+        notifyItemRangeInserted(mNews.size, newNews.size)
     }
 
     fun refresh(news: List<News>) {
         mNews.clear()
         mNews.addAll(news)
+        notifyDataSetChanged()
     }
 }

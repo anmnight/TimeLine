@@ -1,8 +1,10 @@
 package com.anxiao.timeline.data.network.api
 
-open class NewsResponse<T>(val code: Int, val message: String, val result: T)
+import com.anxiao.core.extension.empty
 
-//todo create empty data class
-class EmptyResponse<T>(val code: Int, val message: String)
+data class NewsResponse<T>(val code: Int, val message: String, val result: T) {
 
-
+    companion object {
+        fun <T> empty(result: T) = NewsResponse(200, String.empty(), result)
+    }
+}

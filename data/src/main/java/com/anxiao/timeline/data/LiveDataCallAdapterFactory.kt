@@ -1,7 +1,6 @@
-package com.anxiao.timeline.data.network
+package com.anxiao.timeline.data
 
 import androidx.lifecycle.LiveData
-import com.anxiao.timeline.data.ApiResponse
 import retrofit2.CallAdapter
 import retrofit2.Retrofit
 import java.lang.reflect.ParameterizedType

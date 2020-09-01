@@ -51,7 +51,6 @@ class NewsFragment : Fragment() {
             renderNewsList(it)
         })
 
-
         list_news.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
 
         mAdapter = context?.let { NewsListAdapter(it) }

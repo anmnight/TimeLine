@@ -44,10 +44,7 @@ interface NewsRepository {
                 true -> request(
                     service.getNews(),
                     { handlerException(it) },
-                    NewsResponse(
-                        200, "default",
-                        emptyList()
-                    )
+                    NewsResponse.empty(emptyList())
                 )
                 false, null -> Either.Left(Failure.NetworkConnection)
             }
@@ -69,7 +66,7 @@ interface NewsRepository {
                     true -> Either.Right(transform(response.body() ?: default))
                 }
             } catch (exception: Throwable) {
-                Either.Left(Failure.ServerError)
+                Either.Left(NewsNetFailure(exception))
             }
         }
     }
