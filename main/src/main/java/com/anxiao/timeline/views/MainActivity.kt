@@ -5,18 +5,18 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import com.anxiao.timeline.R
-import com.anxiao.timeline.views.news.NewsFragment
+import com.anxiao.timeline.views.harvard.HarvardImageFragment
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var newsFragment: NewsFragment
+    private lateinit var newsFragment: HarvardImageFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(findViewById(R.id.toolbar))
 
-        newsFragment = NewsFragment.newInstance()
+        newsFragment = HarvardImageFragment.newInstance()
 
         val ts = supportFragmentManager.beginTransaction()
         ts.add(R.id.content, newsFragment)
