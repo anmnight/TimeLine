@@ -11,10 +11,14 @@ android {
         minSdkVersion rootProject.ext.android["minSdkVersion"]
         targetSdkVersion rootProject.ext.android["targetSdkVersion"]
 
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
 
+    }
+
+    packagingOptions {
+        exclude 'META-INF/CHANGES'
+        exclude 'META-INF/README.md'
     }
 
     buildTypes {
@@ -45,24 +49,16 @@ dependencies {
     testImplementation 'org.mockito:mockito-core:3.3.3'
     androidTestImplementation 'org.mockito:mockito-android:3.0.0'
 
-    testImplementation 'androidx.room:room-testing:2.2.5'
-    testImplementation 'com.squareup.okhttp3:mockwebserver:4.7.2'
-
     api 'com.squareup.retrofit2:retrofit:2.9.0'
     api 'com.squareup.retrofit2:converter-gson:2.9.0'
-    api 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
     api 'com.squareup.okhttp3:logging-interceptor:4.7.2'
 
+    testImplementation 'androidx.room:room-testing:2.2.5'
+    testImplementation 'com.squareup.okhttp3:mockwebserver:4.7.2'
     implementation 'androidx.room:room-runtime:2.2.5'
     kapt 'androidx.room:room-compiler:2.2.5'
     implementation 'androidx.room:room-ktx:2.2.5'
-    implementation 'androidx.room:room-rxjava2:2.2.5'
     implementation 'com.facebook.stetho:stetho:1.5.1'
 
-    api 'io.reactivex.rxjava2:rxandroid:2.1.1'
-    api 'io.reactivex.rxjava2:rxjava:2.2.13'
-    api 'androidx.lifecycle:lifecycle-reactivestreams:2.2.0'
-
-    implementation files('libs/jsoup-1.11.3.jar')
     implementation project(path: ':core')
 }

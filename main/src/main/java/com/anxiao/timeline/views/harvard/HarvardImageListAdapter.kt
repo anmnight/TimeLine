@@ -29,7 +29,7 @@ class HarvardImageListAdapter(val context: Context) :
         val harvardImage = mHarvardImages[position]
         holder.title.text = harvardImage.copyright
         Glide.with(context)
-            .load(harvardImage.baseimageurl)
+            .load(harvardImage.baseImageUrl)
             .centerCrop()
             .into(holder.image)
     }

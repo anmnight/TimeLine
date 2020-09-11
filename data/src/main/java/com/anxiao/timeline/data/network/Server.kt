@@ -6,6 +6,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class Server {
+
     private var client: Retrofit
 
     private val harvardUrl = "https://api.harvardartmuseums.org"

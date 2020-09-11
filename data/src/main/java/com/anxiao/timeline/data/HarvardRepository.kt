@@ -1,6 +1,5 @@
 package com.anxiao.timeline.data
 
-import androidx.paging.PagingSource
 import com.anxiao.core.exception.Failure
 import com.anxiao.core.functional.Either
 import com.anxiao.core.platform.NetworkHandler

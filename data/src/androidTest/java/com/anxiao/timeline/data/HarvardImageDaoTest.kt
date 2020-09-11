@@ -4,13 +4,16 @@ import androidx.room.Room
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.anxiao.timeline.data.local.TimeLineDatabase
-import com.anxiao.timeline.data.vo.News
-import kotlinx.coroutines.runBlocking
+import com.anxiao.timeline.data.vo.HarvardImage
 import org.junit.*
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class NewsDaoTest {
+class HarvardImageDaoTest {
+
+    private val harvardImageDao by lazy {
+        database.harvardImageDao()
+    }
 
     private lateinit var database: TimeLineDatabase
 
@@ -22,7 +25,6 @@ class NewsDaoTest {
         )
             .allowMainThreadQueries()
             .build()
-
     }
 
     @After
@@ -30,12 +32,25 @@ class NewsDaoTest {
         database.close()
     }
 
+
     @Test
-    fun testInsertUser() = runBlocking {
-        val news = News(0, "path", "image", "title", "time")
-        database.newsDao().insert(news)
-        val result = database.newsDao().find()
-        Assert.assertEquals(result.size, 1)
+    fun testInsert() {
+        HarvardImage.empaty()
+            .run {
+                harvardImageDao.insertImages(this)
+                val list = harvardImageDao.allImages()
+                Assert.assertEquals(list.size, 1)
+            }
+    }
+
+    @Test
+    fun testFindById() {
+        HarvardImage.empaty()
+            .run {
+                harvardImageDao.insertImages(this)
+                val image = harvardImageDao.queryImageById(0)
+                Assert.assertEquals(this, image)
+            }
     }
 
 

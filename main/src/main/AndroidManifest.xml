@@ -24,8 +24,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".views.personel.PersonalActivity" />
-
         <activity
             android:name=".views.SplashActivity"
             android:theme="@style/LaunchApp">

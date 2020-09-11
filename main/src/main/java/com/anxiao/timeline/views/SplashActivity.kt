@@ -5,7 +5,6 @@ import android.os.Bundle
 import com.anxiao.core.debug
 import com.anxiao.timeline.R
 import com.anxiao.timeline.views.fragments.AdFragment
-import com.anxiao.timeline.views.news.NewsFragment
 
 class SplashActivity : AppCompatActivity() {
 
