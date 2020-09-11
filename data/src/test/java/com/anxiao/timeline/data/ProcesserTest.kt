@@ -9,13 +9,10 @@ import org.junit.runners.JUnit4
 class ProcesserTest {
 
 
-    val processer = RegionRepository()
 
     @Test
     fun testProcesserGetDataNomal() {
-        val result = processer.provincesList
-        println(result)
-        Assert.assertNotNull(result)
+
     }
 
 }
