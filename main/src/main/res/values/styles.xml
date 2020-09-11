@@ -1,6 +1,6 @@
 <resources>
 
-    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar"/>
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar" />
 
     <style name="LaunchApp" parent="AppTheme">
         <item name="android:background">@drawable/startup</item>
@@ -68,5 +68,14 @@
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/nav_button_text</item>
     </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>

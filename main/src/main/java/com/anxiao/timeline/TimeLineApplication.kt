@@ -3,7 +3,7 @@ package com.anxiao.timeline
 import android.app.Application
 import android.content.Context
 import com.anxiao.timeline.CrashHandler.Companion.holder
-import com.anxiao.timeline.data.database.DBRegister
+import com.anxiao.timeline.data.local.DBRegister
 
 class TimeLineApplication : Application() {
 

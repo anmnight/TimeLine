@@ -1,3 +1,4 @@
-rootProject.name='TimeLine'
+include ':core'
 include ':main'
 include ':data'
+rootProject.name='TimeLine'

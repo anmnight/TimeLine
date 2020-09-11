@@ -3,8 +3,9 @@ package com.anxiao.timeline.data
 import androidx.room.Room
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.anxiao.timeline.data.database.TimeLineDatabase
+import com.anxiao.timeline.data.local.TimeLineDatabase
 import com.anxiao.timeline.data.vo.News
+import kotlinx.coroutines.runBlocking
 import org.junit.*
 import org.junit.runner.RunWith
 
@@ -30,15 +31,12 @@ class NewsDaoTest {
     }
 
     @Test
-    fun testInsertUser() {
-
+    fun testInsertUser() = runBlocking {
         val news = News(0, "path", "image", "title", "time")
-        database.newsDao()
-            .insert(news)
-            .test()
-            .assertComplete()
-
-
+        database.newsDao().insert(news)
+        val result = database.newsDao().find()
+        Assert.assertEquals(result.size, 1)
     }
+
 
 }
