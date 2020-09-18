@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.anxiao.core.debug
 import com.anxiao.core.exception.Failure
@@ -14,6 +16,11 @@ import com.anxiao.timeline.R
 import com.anxiao.timeline.data.vo.HarvardImage
 import com.anxiao.timeline.views.harvard.paging.HarvardImageAdapter
 import kotlinx.android.synthetic.main.news_fragment.*
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.distinctUntilChangedBy
+import kotlinx.coroutines.flow.filter
 
 class HarvardImageFragment : Fragment() {
 
@@ -34,6 +41,9 @@ class HarvardImageFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+
+
+
         viewModel =
             ViewModelProvider(
                 viewModelStore,
@@ -48,20 +58,29 @@ class HarvardImageFragment : Fragment() {
             }
         })
 
-        viewModel.queryHarvardImage.observe(viewLifecycleOwner, {
-            renderNewsList(it)
-        })
 
-        list_news.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-
+        //配置list
         val adapter = HarvardImageAdapter()
+        list_news.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         list_news.adapter = adapter
 
-//        lifecycleScope.launch {
-//            viewModel.queryHarvardImage
-//        }
+        //配置Paging
 
-        viewModel.loadHarvardImage()
+        lifecycleScope.launchWhenCreated {
+            viewModel.images.collectLatest {
+                adapter.submitData(it)
+            }
+        }
+
+        lifecycleScope.launchWhenCreated {
+            @OptIn(FlowPreview::class)
+            adapter.loadStateFlow
+                .distinctUntilChangedBy { it.refresh }
+                .filter { it.refresh is LoadState.NotLoading }
+                .collect { list_news.scrollToPosition(0) }
+        }
+
+
     }
 
 

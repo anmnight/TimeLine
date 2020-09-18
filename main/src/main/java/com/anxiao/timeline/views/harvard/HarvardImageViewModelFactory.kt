@@ -6,20 +6,20 @@ import androidx.lifecycle.ViewModelProvider
 import com.anxiao.core.platform.NetworkHandler
 import com.anxiao.timeline.data.network.HarvardService
 import com.anxiao.timeline.data.network.Server
+import com.anxiao.timeline.views.harvard.paging.ItemKeyedHarvardRepository
 
 class HarvardImageViewModelFactory(val context: Context) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
 
-        val getHarvardImage =
-            GetHarvardImage(
-                HarvardRepository.Network(
-                    NetworkHandler(context),
-                    HarvardService(Server().retrofit())
-                )
+        val itemKeyedHarvardRepository =
+            ItemKeyedHarvardRepository(
+                NetworkHandler(context),
+                HarvardService(Server().retrofit())
             )
 
-        return modelClass.getConstructor(GetHarvardImage::class.java).newInstance(getHarvardImage)
+        return modelClass.getConstructor(ItemKeyedHarvardRepository::class.java)
+            .newInstance(itemKeyedHarvardRepository)
     }
 
 }

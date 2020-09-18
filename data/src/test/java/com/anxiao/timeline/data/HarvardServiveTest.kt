@@ -2,6 +2,7 @@ package com.anxiao.timeline.data
 
 import com.anxiao.timeline.data.network.HarvardService
 import com.anxiao.timeline.data.network.Server
+import kotlinx.coroutines.runBlocking
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -18,10 +19,9 @@ class HarvardServiveTest {
     }
 
     @Test(timeout = 6000)
-    fun `test get images api is ok`() = run {
-        val resp = harvardService.getHarvardImages(_index).execute()
-        Assert.assertEquals(resp.code(), 200)
-
+    fun `test get images api is ok`() = runBlocking {
+        val resp = harvardService.getHarvardImages(_index)
+        Assert.assertNotEquals(resp.info, null)
     }
 
     @Test(timeout = 6000)
