@@ -1,4 +1,4 @@
-package com.anxiao.timeline.data.local.dao
+package com.anxiao.timeline.data.db.dao
 
 import androidx.room.Dao
 import androidx.room.Insert

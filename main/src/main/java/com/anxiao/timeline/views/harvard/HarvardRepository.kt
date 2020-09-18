@@ -1,41 +1,38 @@
-package com.anxiao.timeline.data
+package com.anxiao.timeline.views.harvard
 
+import androidx.paging.PagingData
 import com.anxiao.core.exception.Failure
 import com.anxiao.core.functional.Either
 import com.anxiao.core.platform.NetworkHandler
 import com.anxiao.timeline.data.network.HarvardService
-import com.anxiao.timeline.data.network.api.HarvardResponse
-import com.anxiao.timeline.data.network.api.NewsNetFailure
+import com.anxiao.timeline.data.network.HarvardResponse
+import com.anxiao.timeline.data.network.NewsNetFailure
 import com.anxiao.timeline.data.vo.HarvardImage
+import kotlinx.coroutines.flow.Flow
 import retrofit2.Call
+import java.lang.Exception
 
 
-interface HarvardRepository {
+abstract class HarvardRepository {
 
-    fun getHarvardImages(index: Int): Either<Failure, List<HarvardImage>>
+    abstract fun getHarvardImages(index: Int): Flow<PagingData<HarvardImage>>
 
-    fun getHarvardImageDetails(imageId: Int): Either<Failure, HarvardImage>
+    abstract fun getHarvardImageDetails(imageId: Int): Either<Failure, HarvardImage>
 
-    class Network(private val networkHandler: NetworkHandler, private val service: HarvardService) :
-        HarvardRepository {
+    abstract class Network(
+        private val networkHandler: NetworkHandler,
+        private val service: HarvardService
+    ) :
+        HarvardRepository() {
 
-        override fun getHarvardImages(index: Int): Either<Failure, List<HarvardImage>> {
-            return when (networkHandler.isConnected) {
-                true -> request(
-                    service.getHarvardImages(index),
-                    { it.records },
-                    HarvardResponse.empty()
-                )
-                else -> Either.Left(Failure.NetworkConnection)
-            }
-        }
+        abstract override fun getHarvardImages(index: Int): Flow<PagingData<HarvardImage>>
 
         override fun getHarvardImageDetails(imageId: Int): Either<Failure, HarvardImage> {
             return when (networkHandler.isConnected) {
                 true -> request(
                     service.getHarvardImageDetails(imageId),
                     { it },
-                    HarvardImage.empaty()
+                    HarvardImage.empty()
                 )
                 else -> Either.Left(Failure.NetworkConnection)
             }

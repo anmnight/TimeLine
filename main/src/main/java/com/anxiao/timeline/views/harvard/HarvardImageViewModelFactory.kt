@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.anxiao.core.platform.NetworkHandler
-import com.anxiao.timeline.data.HarvardRepository
 import com.anxiao.timeline.data.network.HarvardService
 import com.anxiao.timeline.data.network.Server
 

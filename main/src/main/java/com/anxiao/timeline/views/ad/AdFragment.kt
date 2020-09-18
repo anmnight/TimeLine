@@ -1,4 +1,4 @@
-package com.anxiao.timeline.views.fragments
+package com.anxiao.timeline.views.ad
 
 import androidx.fragment.app.DialogFragment
 

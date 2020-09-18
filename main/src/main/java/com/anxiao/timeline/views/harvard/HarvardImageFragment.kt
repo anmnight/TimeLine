@@ -12,7 +12,7 @@ import com.anxiao.core.debug
 import com.anxiao.core.exception.Failure
 import com.anxiao.timeline.R
 import com.anxiao.timeline.data.vo.HarvardImage
-import com.anxiao.timeline.data.vo.News
+import com.anxiao.timeline.views.harvard.paging.HarvardImageAdapter
 import kotlinx.android.synthetic.main.news_fragment.*
 
 class HarvardImageFragment : Fragment() {
@@ -22,7 +22,7 @@ class HarvardImageFragment : Fragment() {
     }
 
     private lateinit var viewModel: HarvardImageViewModel
-    private var mAdapter: HarvardImageListAdapter? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,16 +54,19 @@ class HarvardImageFragment : Fragment() {
 
         list_news.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
 
-        mAdapter = context?.let { HarvardImageListAdapter(it) }
+        val adapter = HarvardImageAdapter()
+        list_news.adapter = adapter
 
-        list_news.adapter = mAdapter
+//        lifecycleScope.launch {
+//            viewModel.queryHarvardImage
+//        }
 
         viewModel.loadHarvardImage()
     }
 
 
     private fun renderNewsList(news: List<HarvardImage>) {
-        mAdapter?.loadMore(news)
+//        mAdapter?.loadMore(news)
     }
 
     private fun handlerServerError(failure: Failure) {

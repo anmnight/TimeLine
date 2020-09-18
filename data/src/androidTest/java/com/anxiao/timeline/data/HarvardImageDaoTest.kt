@@ -3,7 +3,7 @@ package com.anxiao.timeline.data
 import androidx.room.Room
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.anxiao.timeline.data.local.TimeLineDatabase
+import com.anxiao.timeline.data.db.TimeLineDatabase
 import com.anxiao.timeline.data.vo.HarvardImage
 import org.junit.*
 import org.junit.runner.RunWith
@@ -35,7 +35,7 @@ class HarvardImageDaoTest {
 
     @Test
     fun testInsert() {
-        HarvardImage.empaty()
+        HarvardImage.empty()
             .run {
                 harvardImageDao.insertImages(this)
                 val list = harvardImageDao.allImages()
@@ -45,7 +45,7 @@ class HarvardImageDaoTest {
 
     @Test
     fun testFindById() {
-        HarvardImage.empaty()
+        HarvardImage.empty()
             .run {
                 harvardImageDao.insertImages(this)
                 val image = harvardImageDao.queryImageById(0)

@@ -1,4 +1,4 @@
-package com.anxiao.timeline.data.network.api
+package com.anxiao.timeline.data.network
 
 import com.anxiao.timeline.data.vo.HarvardImage
 import retrofit2.Call
@@ -13,11 +13,11 @@ interface HarvardApi {
         private const val key = "459952da-e71f-4e08-b779-e4b9ae13c1f1"
     }
 
-    @GET("/image?apikey=${key}")
-    fun getHarvardImages(@Query("index") index: Int): Call<HarvardResponse<HarvardImage>>
+    @GET("/image?apikey=$key")
+    suspend fun getHarvardImages(@Query("index") index: Int): HarvardResponse
 
 
-    @GET("/image/{imageId}?apikey=${key}")
+    @GET("/image/{imageId}?apikey=$key")
     fun getHarvardImageDetails(@Path("imageId") imageId: Int): Call<HarvardImage>
 
 }

@@ -1,4 +1,4 @@
-package com.anxiao.timeline.data.network.api
+package com.anxiao.timeline.data.network
 
 import com.anxiao.core.exception.Failure
 

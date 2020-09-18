@@ -74,7 +74,7 @@ data class HarvardImage(
 
 ) {
     companion object {
-        fun empaty() = HarvardImage()
+        fun empty() = HarvardImage()
     }
 }
 
