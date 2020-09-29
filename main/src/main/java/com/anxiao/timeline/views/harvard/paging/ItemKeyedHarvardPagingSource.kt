@@ -2,11 +2,9 @@ package com.anxiao.timeline.views.harvard.paging
 
 import androidx.paging.PagingSource
 import com.anxiao.timeline.data.network.HarvardService
-import com.anxiao.timeline.views.harvard.HarvardRepository
 import com.anxiao.timeline.data.vo.HarvardImage
 import retrofit2.HttpException
 import java.io.IOException
-import java.lang.Exception
 
 class ItemKeyedHarvardPagingSource(private val harvardService: HarvardService) :
     PagingSource<Int, HarvardImage>() {

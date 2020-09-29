@@ -3,7 +3,6 @@ package com.anxiao.timeline.data
 import androidx.room.Room
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.anxiao.timeline.data.db.TimeLineDatabase
 import com.anxiao.timeline.data.vo.HarvardImage
 import org.junit.*
 import org.junit.runner.RunWith
@@ -15,13 +14,13 @@ class HarvardImageDaoTest {
         database.harvardImageDao()
     }
 
-    private lateinit var database: TimeLineDatabase
+    private lateinit var database: com.anxiao.timeline.data.db.TimeLineDatabase
 
     @Before
     fun createDb() {
         database = Room.inMemoryDatabaseBuilder(
             InstrumentationRegistry.getInstrumentation().targetContext,
-            TimeLineDatabase::class.java
+            com.anxiao.timeline.data.db.TimeLineDatabase::class.java
         )
             .allowMainThreadQueries()
             .build()
