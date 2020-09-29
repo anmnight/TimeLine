@@ -14,7 +14,7 @@ interface HarvardApi {
     }
 
     @GET("/image?apikey=$key")
-    suspend fun getHarvardImages(@Query("index") index: Int): HarvardResponse
+    suspend fun getHarvardImages(@Query("page") page: Int): HarvardResponse
 
 
     @GET("/image/{imageId}?apikey=$key")

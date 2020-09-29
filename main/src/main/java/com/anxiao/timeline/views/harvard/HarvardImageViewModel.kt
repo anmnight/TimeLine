@@ -12,7 +12,7 @@ class HarvardImageViewModel constructor(repository: ItemKeyedHarvardRepository) 
     private val clearListCh = Channel<Unit>(Channel.CONFLATED)
 
     @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
-    val images = repository.getHarvardImages(1)
+    val images = repository.getHarvardImages()
 
 
 

@@ -15,10 +15,10 @@ class ItemKeyedHarvardRepository(
 ) : HarvardRepository.Network(networkHandler, service) {
 
 
-    override fun getHarvardImages(index: Int): Flow<PagingData<HarvardImage>> {
+    override fun getHarvardImages(): Flow<PagingData<HarvardImage>> {
 
         return Pager(
-            PagingConfig(pageSize = 5, enablePlaceholders = false)
+            PagingConfig(pageSize = 50, enablePlaceholders = false)
         ) {
             ItemKeyedHarvardPagingSource(service)
         }.flow

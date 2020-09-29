@@ -12,15 +12,14 @@ class ItemKeyedHarvardPagingSource(private val harvardService: HarvardService) :
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, HarvardImage> {
 
+        val nextPageNumber = params.key ?: 1
 
         return try {
-            val items =
-                harvardService.getHarvardImages(index = if (params is LoadParams.Append) params.key else 0).records
-
+            val response = harvardService.getHarvardImages(nextPageNumber)
             LoadResult.Page(
-                data = items,
-                prevKey = items.firstOrNull()?.id,
-                nextKey = items.lastOrNull()?.id
+                data = response.records,
+                prevKey = null,
+                nextKey = response.info.page + 1
             )
         } catch (e: IOException) {
             LoadResult.Error(e)

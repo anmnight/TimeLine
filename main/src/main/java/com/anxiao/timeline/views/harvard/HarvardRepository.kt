@@ -13,7 +13,7 @@ import retrofit2.Call
 
 abstract class HarvardRepository {
 
-    abstract fun getHarvardImages(index: Int): Flow<PagingData<HarvardImage>>
+    abstract fun getHarvardImages(): Flow<PagingData<HarvardImage>>
 
     abstract fun getHarvardImageDetails(imageId: Int): Either<Failure, HarvardImage>
 
@@ -23,7 +23,7 @@ abstract class HarvardRepository {
     ) :
         HarvardRepository() {
 
-        abstract override fun getHarvardImages(index: Int): Flow<PagingData<HarvardImage>>
+        abstract override fun getHarvardImages(): Flow<PagingData<HarvardImage>>
 
         override fun getHarvardImageDetails(imageId: Int): Either<Failure, HarvardImage> {
             return when (networkHandler.isConnected) {
