@@ -29,11 +29,6 @@
             android:theme="@style/LaunchApp">
 
         </activity>
-        <activity
-            android:name=".views.ChartsActivity"
-            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
-            android:hardwareAccelerated="true"
-            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>

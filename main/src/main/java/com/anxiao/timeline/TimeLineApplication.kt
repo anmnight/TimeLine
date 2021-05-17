@@ -25,7 +25,5 @@ class TimeLineApplication : Application() {
 
         DBRegister.init(this, "timeline_db")
 
-        FlutterEngineManager.build(this)
-
     }
 }
